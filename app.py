@@ -256,8 +256,8 @@ def post_data():
         src_image_bucket = entity["bucket"]["value"]
         
         # Submit tasks for both PersonVehicleDetection and FloodSegmentation
-        entities_to_explain = ['PersonVehicleDetection']
-        # entities_to_explain = ['FloodSegmentation', 'PersonVehicleDetection']
+        # entities_to_explain = ['PersonVehicleDetection']
+        entities_to_explain = ['FloodSegmentation', 'PersonVehicleDetection']
         
         task_ids = []
         for entity_type in entities_to_explain:
