@@ -1,0 +1,19 @@
+# Ignore large files and folders
+models/
+data/
+output/
+*.pt
+*.pth
+*.ckpt
+# Ignore data, checkpoints, and models
+data/
+models/
+output/
+*.pt
+models/checkpoints/*
+datasets/data/*
+__pycache__/
+output/
+
+.venv/
+.conda/

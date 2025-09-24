@@ -1,0 +1,56 @@
+  {
+    "id": "urn:ngsi-ld:Notification:75aafdc2-04ba-11f0-9cc5-0a580a821cb0",
+    "type": "Notification",
+    "subscriptionId": "urn:ngsi-ld:Subscription:tfa02:001",
+    "notifiedAt": "2025-03-19T12:05:33.291Z",
+    "data": [
+      {
+      "id": "urn:ngsi-ld:USE:SV-01:ImageMetadata:01",
+      "type": "ImageMetadata",
+      "DroneLocation": {
+        "type": "Property",
+        "value": {
+          "altitude": 295.4,
+          "latitude": 50.516214,
+          "longitude": 6.986944
+        }
+      },
+      "ImageBatchSize": {
+        "type": "Property",
+        "value": 10
+      },
+      "bm_id": {
+        "type": "Property",
+        "value": "717bd21df7b45ac0f0b6bf2cd2994f0d"
+      },
+      "bucket": {
+        "type": "Property",
+        "value": "use"
+      },
+      "camera_parameters": {
+        "type": "Property",
+        "value": {
+          "fov": 73.7,
+          "height": 506,
+          "width": 676
+        }
+      },
+      "filename": {
+        "type": "Property",
+        "value": "sv01/717bd21df7b45ac0f0b6bf2cd2994f0d/1/DJI_20211023132025_0072_W.JPG"
+      },
+      "gimbal_parameters": {
+        "type": "Property",
+        "value": {
+          "pitch": -0.785398,
+          "roll": 0,
+          "yaw": -1.356121
+        }
+      },
+      "minio_url": {
+        "type": "Property",
+        "value": "https://storage.tema.digital-enabler.eng.it:443/use/sv01/717bd21df7b45ac0f0b6bf2cd2994f0d/1/DJI_20211023132025_0072_W.JPG"
+      }
+    }
+  ]
+}

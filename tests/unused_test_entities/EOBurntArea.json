@@ -1,0 +1,30 @@
+[
+{
+    "@context": [
+        "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld"
+    ],
+    "id":"urn:ngsi-ld:tema:DLR:TFA-09:EOBurntArea:S3:2b2fbf4f-1b0e-4ef8-9ba4-236a2aeb4411",
+    "type": "EOBurntArea",
+    "creator": "DLR/EOC Georisks and Civil Security",
+    "dateCreated": {
+        "type": "Property",
+        "value": "2021-08-14T10:20:03+00:00"
+    },
+    "title": "FeatureCollection Burnt Area, Sardinia, 2020-2024, Sentinel 3",
+    "data": {
+        "type": "Property",
+        "value": {
+            "href": "https://geoservice.dlr.de/eoc/burntarea/ogc/features/v1/collections/burntarea:BURNTAREA_S3_EFR_P1D/items?f=json&limit=10000&bbox=5.557,38.622,13.268,41.345&datetime=2020-11-11T00:00:00.000Z/2024-11-18T00:00:00.000Z",
+            "type": "application/json"
+        }
+    },
+    "resolution": {
+        "type": "Property",
+        "value": "300m"
+    },
+    "crs": {
+        "type": "Property",
+        "value": "urn:ogc:def:crs:EPSG::4326"
+    }
+}
+]

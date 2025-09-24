@@ -1,0 +1,1 @@
+curl -X DELETE 'https://orion.tema.digital-enabler.eng.it/ngsi-ld/v1/subscriptions/urn:ngsi-ld:fhhi:test_subscription'

@@ -1,0 +1,50 @@
+[
+{
+    "@context": [
+        "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld"
+    ],
+    "id": {
+        "type":"Property",
+        "value": "SWIM_WE_S1A_IW_GRDH_1SDV_20210715T055052_20210715T055117_038784_049389_2074.SAFE"
+    },
+    "type": "EOFloodExtent",
+    "creator": "DLR/EOC Georisks and Civil Security",
+    "dateCreated": {
+        "type": "Property",
+        "value": "2021-07-15T05:50:52.398000Z"
+        },
+    "geometry": {
+        "type": "GeoProperty",
+        "value": {"type":"Polygon","coordinates":[[[6.95202,49.21365],[7.426398,50.707546],[3.721971,51.117897],[3.361044,49.622269],[6.95202,49.21365]]]}
+    },
+    "bbox": {
+        "type": "GeoProperty",
+        "value": [3.361044,49.21365,7.426398,51.117897]
+    },
+    "processing:software": {
+        "type": "Property",
+        "value": {
+            "proc_hr_semseg": "2.1.0",
+            "onnx_model": "1.2.1-s1water"
+        }
+    },
+    "data": {
+        "type": "Property",
+        "value": {
+            "href": "https://download.geoservice.dlr.de/SWIM_WE/files//2021/07/15/SWIM_WE_S1A_IW_GRDH_1SDV_20210715T055052_20210715T055117_038784_049389_2074.SAFE/SWIM_WE_S1A_IW_GRDH_1SDV_20210715T055052_20210715T055117_038784_049389_2074.SAFE_DATA.tif",
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "title": "Surface Water Extent",
+            "description": "Identifies all water pixels in the satellite image. Water segmentation is done with a pre-trained convolutional neural network. Invalid pixels are the result of no-data values in the satellite image and/or atmospheric obstructions such as clouds or cloud-shadows."
+        }
+    },
+    "overview-mask": {
+        "type": "Property",
+        "value": {
+            "href": "https://download.geoservice.dlr.de/SWIM_WE/files//2021/07/15/SWIM_WE_S1A_IW_GRDH_1SDV_20210715T055052_20210715T055117_038784_049389_2074.SAFE/SWIM_WE_S1A_IW_GRDH_1SDV_20210715T055052_20210715T055117_038784_049389_2074.SAFE_OVERVIEW_MASK.tif",
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+            "title": "Overview Mask (downsampled)",
+            "description": "Provides a visual overview of analysis results."
+        }
+    }
+}
+]

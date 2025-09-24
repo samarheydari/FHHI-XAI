@@ -1,0 +1,152 @@
+{
+"id": "urn:ngsi-ld:Alert:101",
+"type": "Alert",
+"area": {
+    "type": "GeoProperty",
+    "value": {
+    "coordinates": [
+        [
+        [
+            8.632164,
+            40.172315
+        ],
+        [
+            8.685722,
+            40.169692
+        ],
+        [
+            8.645897,
+            40.121141
+        ],
+        [
+            8.588905,
+            40.115627
+        ],
+        [
+            8.583412,
+            40.147126
+        ],
+        [
+            8.588219,
+            40.171004
+        ],
+        [
+            8.632164,
+            40.172315
+        ]
+        ]
+    ],
+    "type": "Polygon"
+    }
+},
+"areaDesc": {
+    "type": "Property",
+    "value": "TEMA Pilot exercise"
+},
+"bm_id": {
+    "type": "Property",
+    "value": "1dd6022df507af26f9388f2125564767"
+},
+"category": {
+    "type": "Property",
+    "value": "Met"
+},
+"certainty": {
+    "type": "Property",
+    "value": "Observed"
+},
+"effective": {
+    "type": "Property",
+    "value": "2025-02-14T13:56:35.833856+00:00"
+},
+"event": {
+    "type": "Property",
+    "value": "Flood"
+},
+"expires": {
+    "type": "Property",
+    "value": "2025-12-31T10:57:55.325Z"
+},
+"ignitionPoints": {
+    "type": "GeoProperty",
+    "value": {
+    "type": "MultiPoint",
+    "coordinates": [
+        [
+        8.67274,
+        40.165429
+        ],
+        [
+        8.648016,
+        40.128889
+        ]
+    ]
+    }
+},
+"msgType": {
+    "type": "Property",
+    "value": "Alert"
+},
+"sender": {
+    "type": "Property",
+    "value": "alert@tema-project.eu"
+},
+"sent": {
+    "type": "Property",
+    "value": "2025-02-14T13:56:35.833890+00:00"
+},
+"severity": {
+    "type": "Property",
+    "value": "Severe"
+},
+"urgency": {
+    "type": "Property",
+    "value": "Immediate"
+},
+"status": {
+    "type": "Property",
+    "value": "Exercise"
+},
+"location": {
+    "type": "GeoProperty",
+    "value": {
+    "coordinates": [
+        [
+        [
+            8.632164,
+            40.172315
+        ],
+        [
+            8.685722,
+            40.169692
+        ],
+        [
+            8.645897,
+            40.121141
+        ],
+        [
+            8.588905,
+            40.115627
+        ],
+        [
+            8.583412,
+            40.147126
+        ],
+        [
+            8.588219,
+            40.171004
+        ],
+        [
+            8.632164,
+            40.172315
+        ]
+        ]
+    ],
+    "type": "Polygon"
+    }
+},
+"scope": {
+    "type": "Property",
+    "value": "Private"
+}
+}
