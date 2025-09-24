@@ -50,4 +50,3 @@ curl -X POST 'https://orion.tema.digital-enabler.eng.it/ngsi-ld/v1/subscriptions
     }
 }'
 
-

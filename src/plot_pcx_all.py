@@ -353,9 +353,9 @@ def plot_pcx_explanations_pidnet(model_name, model, dataset, image_tensor, n_con
     # Save and show the generated figures.
     plt.tight_layout()
 
-    plt.show()
+    #plt.show()
 
-    return gmm, mean, channel_rels
+    return fig
 
 
 

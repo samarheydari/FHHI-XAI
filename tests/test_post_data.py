@@ -35,4 +35,3 @@ if __name__ == "__main__":
     except:
         print(f"Failed to get response as a json")
         print(response.text)
-

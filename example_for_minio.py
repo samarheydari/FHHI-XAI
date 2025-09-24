@@ -25,4 +25,3 @@ elif script_type == "upload":
     file_name = "data/person_car_detection_data/148_test_images/images/val/0bedd9b6-image_252.jpg" 
 
     minio.upload_file(MINIO_BUCKET, image_name, file_name)
-

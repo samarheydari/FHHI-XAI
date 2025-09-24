@@ -1,3 +1,4 @@
 [submodule "LCRP"]
 	path = LCRP
 	url = https://github.com/kortukov/L-CRP.git
+	branch = main
