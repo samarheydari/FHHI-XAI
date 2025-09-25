@@ -45,7 +45,7 @@ MODEL = dict(
 def get_yolov6(*args, **kwargs):
     cfg = Config({"model": MODEL})
     model = build_model(cfg=cfg, num_classes=80, device=0)
-    sd = torch.load("models/checkpoints/yolov6s_ckpt.pt")
+    sd = torch.load("models/checkpoints/yolo_person_car_detection_ckpt.pt")
     model.load_state_dict(sd)
     model.backbone.stem.switch_to_deploy()
     return model
@@ -54,7 +54,7 @@ def get_yolov6(*args, **kwargs):
 def get_yolov6s6(*args, **kwargs):
     cfg = Config({"model": MODEL})
     device = kwargs.get("device", 0)
-    ckpt_path = kwargs.get("ckpt_path", "models/checkpoints/yolob6s_ckpt.pt")
+    ckpt_path = kwargs.get("ckpt_path", "models/checkpoints/yolo_person_car_detection_ckpt.pt")
     dtype = kwargs.get("dtype", torch.float32)
     checkpoint = torch.load(ckpt_path, map_location=device, weights_only=False) 
     model = checkpoint['model']
