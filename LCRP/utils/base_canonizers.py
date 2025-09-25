@@ -171,10 +171,8 @@ class SequentialMergeBatchNormtoRight(MergeBatchNorm):
                 index = (None, slice(None), *((None,) * (original_weight.ndim - 2)))
 
             # merge batch_norm into linear layer to the right
-            scale_device = scale[index].device
-            original_weight = original_weight.to(scale_device)
-            original_bias = original_bias.to(scale_device)
-            module.weight.data = (original_weight * scale[index])
+            scale_on_device = scale[index].to(original_weight.device)
+            module.weight.data = (original_weight * scale_on_device)
 
             # module.bias.data = original_bias
             if isinstance(module, torch.nn.Conv2d):
@@ -184,7 +182,13 @@ class SequentialMergeBatchNormtoRight(MergeBatchNorm):
                     bias_kernel = shift[index].expand(*(shift[index].shape[0:-2] + original_weight.shape[-2:]))
                     temp_module = torch.nn.Conv2d(in_channels=module.in_channels, out_channels=module.out_channels,
                                                   kernel_size=module.kernel_size, padding=module.padding,padding_mode=module.padding_mode, bias=False)
-                    temp_module.weight.data = original_weight
+
+                    # Ensure temp_module weights and bias, and bias_kernel, are all on the same device
+                    device = bias_kernel.device
+                    temp_module.weight = torch.nn.Parameter(original_weight.to(device))
+                    if temp_module.bias is not None:
+                        temp_module.bias = torch.nn.Parameter(temp_module.bias.to(device))
+                    bias_kernel = bias_kernel.to(device)
                     bias_kernel = temp_module(bias_kernel).detach()
 
                     module.canonization_params = {}
