@@ -12,8 +12,8 @@ from LCRP.utils.pidnet_canonizers import PIDNetCanonizer, EpsilonPlusFlatforPIDN
 COMPOSITES = {
     # object detectors
     "yolov5": EpsilonPlusFlat,
-    "yolov6": EpsilonGammaFlat,
-    "yolov6s6": EpsilonGammaFlat,
+    "yolov6": EpsilonPlusFlat,
+    "yolov6s6": EpsilonPlusFlat,
     "ssd": EpsilonPlusFlat,
     # segmentation models
     "unet": EpsilonPlusFlat,
