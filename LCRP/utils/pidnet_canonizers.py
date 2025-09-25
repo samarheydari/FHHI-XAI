@@ -120,8 +120,12 @@ class PIDNetBaseCanonizer(zcanon.AttributeCanonizer):
 
     @staticmethod
     def convert_grouped_conv_to_regular(seq):
-        new_seq=deepcopy(seq)
-        conv_g=seq[2]
+        new_seq = deepcopy(seq)
+        conv_g = seq[2]
+        # Preserve device and dtype of the original sequence so the replacement stays aligned
+        ref_param = next(seq.parameters(), None)
+        target_device = ref_param.device if ref_param is not None else conv_g.weight.device
+        target_dtype = ref_param.dtype if ref_param is not None else conv_g.weight.dtype
         G = conv_g.groups
         Cin_per_group = conv_g.in_channels // G
         Cout_per_group = conv_g.out_channels // G
@@ -136,7 +140,7 @@ class PIDNetBaseCanonizer(zcanon.AttributeCanonizer):
             dilation=conv_g.dilation,
             bias=(conv_g.bias is not None),
             groups=1
-        )
+        ).to(device=target_device, dtype=target_dtype)
 
         # Zero all weights first
         with torch.no_grad():
@@ -150,12 +154,14 @@ class PIDNetBaseCanonizer(zcanon.AttributeCanonizer):
                 conv_regular.weight[
                     out_start : out_start + Cout_per_group,
                     in_start : in_start + Cin_per_group,
-                ] = conv_g.weight[out_start : out_start + Cout_per_group]
+                ] = conv_g.weight[out_start : out_start + Cout_per_group].to(device=target_device, dtype=target_dtype)
 
             # Copy biases
             if conv_g.bias is not None:
-                conv_regular.bias.copy_(conv_g.bias)
+                conv_regular.bias.copy_(conv_g.bias.to(device=target_device, dtype=target_dtype))
         new_seq[2] = conv_regular
+        if ref_param is not None:
+            new_seq = new_seq.to(device=target_device, dtype=target_dtype)
         return new_seq
     
     @staticmethod
@@ -227,7 +233,16 @@ class PIDNetBaseCanonizer(zcanon.AttributeCanonizer):
         scale_list.append(self.canonizer_sum(torch.stack([s4, x_], dim=-1)))
         # scale_list.append(self.canonizer_sum(torch.stack([s2, x_], dim=-1)))
 
-        scale_out = self.scale_process(torch.cat(scale_list, 1))
+        input_tensor = torch.cat(scale_list, 1)
+        module_device = next(self.scale_process.parameters()).device
+        input_device = input_tensor.device
+        if module_device != input_device:
+            # Align module weights with the current activation device for safe mixed-device runs
+            self.scale_process = self.scale_process.to(input_device)
+            module_device = input_device
+        # Ensure the concatenated tensor resides on the same device as the PAPPM weights
+        input_tensor = input_tensor.to(module_device)
+        scale_out = self.scale_process(input_tensor)
 
         # Here is some error with gradient, that dimensions do not correspond (on forward pass no problem).
         out = self.compression(torch.cat([x_,scale_out],1)) + self.shortcut(x)
