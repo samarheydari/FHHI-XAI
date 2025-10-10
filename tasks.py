@@ -4,9 +4,12 @@ import redis
 from rq import Queue
 import traceback
 
+# Set PyTorch CUDA memory management environment variables
+os.environ['PYTORCH_CUDA_ALLOC_CONF'] = 'max_split_size_mb:128,expandable_segments:True'
+
 from src.explanator import Explanator
 from src.minio_client import MinIOClient, FHHI_MINIO_BUCKET, NAPLES_MINIO_BUCKET
-from common_app_funcs import update_entity, get_bm_id, update_job_status, get_job_status, get_redis_conn, get_job_queue
+from common_app_funcs import update_entity, get_bm_id, get_alert_ref_id, update_job_status, get_job_status, get_redis_conn, get_job_queue
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '.'))
 
@@ -24,6 +27,7 @@ explanator = Explanator(project_root=PROJECT_ROOT, logger=explanator_logger)
 def process_image_task(entity_type, image_bucket, image_filename, task_id):
     try:
         current_bm_id = get_bm_id(redis_conn)
+        current_alert_ref_id = get_alert_ref_id(redis_conn)
 
         minio_client = MinIOClient()  # Create a new instance for the worker
         

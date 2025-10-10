@@ -15,7 +15,7 @@ import time
 # Import your existing modules
 from src.explanator import Explanator
 from src.minio_client import MinIOClient, FHHI_MINIO_BUCKET, NAPLES_MINIO_BUCKET
-from common_app_funcs import update_entity, get_bm_id, set_bm_id, update_job_status, get_job_status, get_redis_conn, get_job_queue
+from common_app_funcs import update_entity, get_bm_id, set_bm_id, set_alert_ref_id , get_alert_ref_id , update_job_status, get_job_status, get_redis_conn, get_job_queue
 from tasks import process_image_task, explanator
 
 
@@ -233,8 +233,10 @@ def post_data():
         # Quick validation check
         if entity_type == "Alert":
             bm_id = entity["bm_id"]["value"]
+            alert_ref = entity["alert_ref"]["value"]
             set_bm_id(bm_id)
-            msg = f"Received Alert with bm_id and saved to redis: {bm_id}"
+            set_alert_ref_id(alert_ref)
+            msg = f"Received Alert with bm_id and alert_ref saved to redis: {bm_id}, {alert_ref}"
             return jsonify({'message': msg}), 200
         
         explanator = get_explanator()
@@ -245,13 +247,17 @@ def post_data():
             return jsonify({'error': err_msg}), 400
 
         current_bm_id = get_bm_id(redis_conn)
+        current_alert_ref_id = get_alert_ref_id(redis_conn)
+        app.logger.debug(f"Current alert_ref: {current_alert_ref_id}")
         app.logger.debug(f"Current bm_id: {current_bm_id}")
 
         # Extract image information
         posted_bm_id = entity["bm_id"]["value"]
         if posted_bm_id != current_bm_id:
             app.logger.warning(f"Received bm_id: {posted_bm_id} does not match current bm_id: {current_bm_id}")
-
+        posted_alert_ref = entity["alert_ref"]["value"]
+        if posted_alert_ref != current_alert_ref_id:
+            app.logger.warning(f"Received alert_ref: {posted_alert_ref} does not match current alert_ref: {current_alert_ref_id}")
         src_image_filename = entity["filename"]["value"]
         src_image_bucket = entity["bucket"]["value"]
         
@@ -323,11 +329,15 @@ def post_data_old():
         
         if entity_type == "Alert":
             bm_id = entity["bm_id"]["value"]
+            alert_ref = entity["alert_ref"]["value"]
+            set_alert_ref_id(alert_ref)
             set_bm_id(bm_id)
-            msg = f"Received Alert with bm_id: {bm_id}"
+            msg = f"Received Alert with bm_id:  {bm_id} and alert_ref: {alert_ref} saved to redis"
             return jsonify({'message': msg}), 200
 
         bm_id = get_bm_id()
+        alert_ref = get_alert_ref_id()
+        app.logger.debug(f"Current alert_ref: {alert_ref}")
 
         app.logger.debug(f"Current bm_id: {bm_id}")
 

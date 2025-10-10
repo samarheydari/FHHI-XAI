@@ -12,6 +12,13 @@ def get_bm_id(redis_conn):
     bm_id = redis_conn.get('current_bm_id')
     return bm_id.decode('utf-8') if bm_id else None
 
+def set_alert_ref_id(redis_conn, alert_ref):
+    redis_conn.set('current_alert_ref_id', alert_ref)
+
+def get_alert_ref_id(redis_conn):
+    alert_ref = redis_conn.get('current_alert_ref_id')
+    return alert_ref.decode('utf-8') if alert_ref else None
+
 def update_job_status(redis_conn, task_id, status_data):
     redis_conn.set(f"job_status:{task_id}", json.dumps(status_data))
 
