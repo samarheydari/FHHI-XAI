@@ -5,7 +5,7 @@ from rq import Queue
 import traceback
 
 # Set PyTorch CUDA memory management environment variables
-os.environ['PYTORCH_CUDA_ALLOC_CONF'] = 'max_split_size_mb:128,expandable_segments:True'
+# Using PyTorch 1.13.1 compatible settings
 
 from src.explanator import Explanator
 from src.minio_client import MinIOClient, FHHI_MINIO_BUCKET, NAPLES_MINIO_BUCKET
@@ -20,16 +20,12 @@ job_queue = get_job_queue(redis_conn)
 explanator_logger = logging.getLogger('explanator')
 explanator_logger.setLevel(logging.DEBUG)
 
-# Create an explanator instance for use in background workers
-explanator = Explanator(project_root=PROJECT_ROOT, logger=explanator_logger)
-
 # This function will be executed by the worker in the background
-def process_image_task(entity_type, image_bucket, image_filename, task_id):
+def process_image_task(entity_type, image_bucket, image_filename, task_id, bm_id, alert_ref):
     try:
-        current_bm_id = get_bm_id(redis_conn)
-        current_alert_ref_id = get_alert_ref_id(redis_conn)
-
+        # Create instances for the worker process
         minio_client = MinIOClient()  # Create a new instance for the worker
+        explanator = Explanator(project_root=PROJECT_ROOT, logger=explanator_logger)  # Create in worker process
         
         # Download the image
         logging.info(f"Task {task_id}: Downloading image from MinIO {image_bucket}/{image_filename}")
@@ -50,7 +46,7 @@ def process_image_task(entity_type, image_bucket, image_filename, task_id):
         
         # Generate explanation
         logging.info(f"Task {task_id}: Explaining entity")
-        explanation_entity, explanation_images, exp_img_filenames = explanator.explain(entity_type, image_bucket, image_filename, img)
+        explanation_entity, explanation_images, exp_img_filenames = explanator.explain(entity_type, image_bucket, image_filename, img, bm_id=bm_id, alert_ref=alert_ref)
         
         # Upload explanation images
         logging.info(f"Task {task_id}: Uploading explanation images to MinIO")
