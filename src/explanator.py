@@ -110,7 +110,7 @@ class Explanator:
         self.logger.debug(f"Forward pass time: {elapsed_time:.2f} ms")
         self.logger.debug(f"Running average forward pass time: {self.running_avg_forward_time:.2f} ms")
 
-    def explain(self, entity_type: str, original_image_bucket: str, original_image_filename: str, image: np.ndarray):
+    def explain(self, entity_type: str, original_image_bucket: str, original_image_filename: str, image: np.ndarray, bm_id, alert_ref):
         """Generate explanation for the given entity type and image."""
         log_cuda_memory(self.logger, f"BEFORE EXPLAIN {entity_type}")
 
@@ -121,7 +121,7 @@ class Explanator:
         handler = self.entity_handlers.get(entity_type)
 
         # Call the handler method with the image
-        result = handler(original_image_bucket, original_image_filename, image)
+        result = handler(original_image_bucket, original_image_filename, image, bm_id=bm_id, alert_ref=alert_ref)
 
         log_cuda_memory(self.logger, f"AFTER EXPLAIN {entity_type}")
         # Clear unnecessary tensors from cache
@@ -164,7 +164,7 @@ class Explanator:
             self._flood_dataset = FloodDataset(root_dir=flood_data_path, split="train", transform=transform)
         return self._flood_dataset
 
-    def explain_flood_segmentation(self, original_image_bucket: str, original_image_filename: str, image: np.ndarray):
+    def explain_flood_segmentation(self, original_image_bucket: str, original_image_filename: str, image: np.ndarray, bm_id, alert_ref):
         """Generate flood segmentation explanation using PCX."""
         log_cuda_memory(self.logger, "FLOOD_SEG START")
 
@@ -229,7 +229,9 @@ class Explanator:
             n_concepts=n_concepts,
             n_refimgs=n_refimgs,
             layer=layer_name,
-            mode="relevance"
+            mode="relevance",
+            bm_id=bm_id,
+            alert_ref=alert_ref
         )
 
         log_cuda_memory(self.logger, "FLOOD_SEG END")
@@ -268,9 +270,8 @@ class Explanator:
         person_car_data_path = os.path.join(self.project_root, "data", "person_car_detection_data", "Arthal")
         dataset = PersonCarDataset(root_dir=person_car_data_path, split="train", transform=transform)
         return dataset
-
     def explain_person_vehicle_detection(self, original_image_bucket: str, original_image_filename: str,
-                                         image: np.ndarray):
+                                         image: np.ndarray, bm_id, alert_ref):
         """Generate person/vehicle detection explanation."""
         original_entity_type = "PersonVehicleDetection"
         original_filename_no_ext = os.path.splitext(original_image_filename)[0]
@@ -384,6 +385,8 @@ class Explanator:
             n_refimgs=n_refimgs,
             layer=layer,
             mode=mode,
+            bm_id=bm_id,
+            alert_ref=alert_ref
         )
         self.logger.warning(f"explanation_entity: {explanation_entity}")
 
