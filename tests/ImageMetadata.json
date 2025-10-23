@@ -21,7 +21,7 @@
       },
       "bm_id": {
         "type": "Property",
-        "value": "717bd21df7b45ac0f0b6bf2cd2994f0d"
+        "value": "2fa4e1f4dbbe86744898e2d51ebed567"
       },
       "alert_ref": {
         "type": "Property",
@@ -41,7 +41,7 @@
       },
       "filename": {
         "type": "Property",
-        "value": "sv01/eca09ece302cbca0c50f2245b4fb60d9/UAV_01/flight_1/set_0/DJI_20240405182825_0924.jpg"
+        "value": "sv01/a6be75af1b9b5ba7d102971f4f8048ec/2/DJI_20211023132215_0099_Z.JPG"
       },
       "gimbal_parameters": {
         "type": "Property",
@@ -53,7 +53,7 @@
       },
       "minio_url": {
         "type": "Property",
-        "value": "https://storage.tema.digital-enabler.eng.it/sv01/0014d2536b31b2d2b2a02890b3b0ff20/1/DJI_20211023131953_0063_W.JPG"
+        "value": "https://storage.tema.digital-enabler.eng.it:443/use/sv01/a6be75af1b9b5ba7d102971f4f8048ec/2/DJI_20211023132215_0099_Z.JPG"
       }
     }
   ]
